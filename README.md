@@ -20,10 +20,22 @@ binary digest and a set of three functions for initializing a digest
 context, updating the context with additional data to be hashed, and
 finalizing the context to get a binary digest result.
 
+This implementation replaces and obsoletes the
+[original pure Erlang implementation](http://steve.vinoski.net/code/sha2.erl).
+
 ## Building and Installing
 
 The **erlsha2** app is built with
-[rebar](https://github.com/basho/rebar), which must be in the command `PATH`.
+[rebar](https://github.com/basho/rebar), which must be in the command
+`PATH`.
+
+I don't use Windows at all so I doubt it builds there. I don't know of
+any reason it shouldn't work there, though; you'll just have to build
+it manually. If nothing else, you could comment out the `on_load`
+directive in the Erlang file to prevent it from loading the NIF
+implementation, thereby gaining access to the pure Erlang
+implementation instead, but note that it's much slower than the C
+code.
 
 ### Erlang Version
 
