@@ -192,12 +192,7 @@ init() ->
     SoName = filename:join(case code:priv_dir(?MODULE) of
                                {error, bad_name} ->
                                    %% this is here for testing purposes
-                                   case file:read_file_info("./priv") of
-                                       {error, _} ->
-                                           "../priv";
-                                       _ ->
-                                           "./priv"
-                                   end;
+                                   filename:join([filename:dirname(code:which(?MODULE)),"..","priv"]);
                                Dir ->
                                    Dir
                            end, atom_to_list(?MODULE) ++ "_nif"),
