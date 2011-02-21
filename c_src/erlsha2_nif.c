@@ -277,6 +277,11 @@ typedef ERL_NIF_TERM (*TermArgcArgvFun)(
     int argc,
     const ERL_NIF_TERM argv[]
 );
+typedef int (*BoolArgcArgvFun)(
+    ErlNifEnv* env,
+    int argc,
+    const ERL_NIF_TERM argv[]
+);
 
 static void
 pad(unsigned char* bin, uint64_t binsize, Context* ctx)
@@ -459,14 +464,17 @@ sha(
     int argc,
     const ERL_NIF_TERM argv[],
     TermArgcArgvFun hd_init,
-    TermArgcArgvFun hd_update,
+    BoolArgcArgvFun hd_update,
     TermArgcArgvFun hd_final
 )
 {
     ERL_NIF_TERM ctx = hd_init(env, argc, argv);
     ERL_NIF_TERM args[2] = {ctx, argv[0]};
-    ERL_NIF_TERM nctx = hd_update(env, 2, args);
-    ERL_NIF_TERM nargs[1] = {nctx};
+    ERL_NIF_TERM nargs[1];
+    if (!hd_update(env, 2, args)) {
+        return enif_make_badarg(env);
+    }
+    nargs[0] = ctx;
     return hd_final(env, 1, nargs);
 }
 
@@ -479,20 +487,20 @@ hd224_init(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
     return enif_make_resource(env, ctx);
 }
 
-static ERL_NIF_TERM
+static int
 hd2xx_update(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 {
     ErlNifBinary data;
     ContextUnion ctxu;
     ErlNifResourceType* ctx_type = (ErlNifResourceType*)enif_priv_data(env);
     if (!enif_get_resource(env, argv[0], ctx_type, &ctxu.v)) {
-        return enif_make_badarg(env);
+        return 0;
     }
     if (!enif_inspect_iolist_as_binary(env, argv[1], &data)) {
-        return enif_make_badarg(env);
+        return 0;
     }
     sha_update_chunks(ctxu.c, &data, sha2xx_chunk);
-    return argv[0];
+    return 1;
 }
 
 static ERL_NIF_TERM
@@ -521,7 +529,7 @@ sha224_init(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 static ERL_NIF_TERM
 sha224_update(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 {
-    return hd2xx_update(env, argc, argv);
+    return hd2xx_update(env, argc, argv) ? argv[0] : enif_make_badarg(env);
 }
 
 static ERL_NIF_TERM
@@ -565,7 +573,7 @@ sha256_init(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 static ERL_NIF_TERM
 sha256_update(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 {
-    return hd2xx_update(env, argc, argv);
+    return hd2xx_update(env, argc, argv) ? argv[0] : enif_make_badarg(env);
 }
 
 static ERL_NIF_TERM
@@ -625,20 +633,20 @@ hd384_init(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
     return enif_make_resource(env, ctx);
 }
 
-static ERL_NIF_TERM
+static int
 hd5xx_update(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 {
     ErlNifBinary data;
     ContextUnion ctxu;
     ErlNifResourceType* ctx_type = (ErlNifResourceType*)enif_priv_data(env);
     if (!enif_get_resource(env, argv[0], ctx_type, &ctxu.v)) {
-        return enif_make_badarg(env);
+        return 0;
     }
     if (!enif_inspect_iolist_as_binary(env, argv[1], &data)) {
-        return enif_make_badarg(env);
+        return 0;
     }
     sha_update_chunks(ctxu.c, &data, sha5xx_chunk);
-    return argv[0];
+    return 1;
 }
 
 static ERL_NIF_TERM
@@ -667,7 +675,7 @@ sha384_init(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 static ERL_NIF_TERM
 sha384_update(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 {
-    return hd5xx_update(env, argc, argv);
+    return hd5xx_update(env, argc, argv) ? argv[0] : enif_make_badarg(env);
 }
 
 static ERL_NIF_TERM
@@ -711,7 +719,7 @@ sha512_init(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 static ERL_NIF_TERM
 sha512_update(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 {
-    return hd5xx_update(env, argc, argv);
+    return hd5xx_update(env, argc, argv) ? argv[0] : enif_make_badarg(env);
 }
 
 static ERL_NIF_TERM

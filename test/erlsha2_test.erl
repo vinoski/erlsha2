@@ -21,6 +21,146 @@ all_test_() ->
              fun sha512_test/1,
              fun sha512_update_test/1]}}.
 
+badarg_224_test() ->
+    try
+        erlsha2:sha224(1234)
+    catch
+        error:badarg ->
+            ok;
+        Type:Error ->
+            ?assertMatch(error, Type),
+            ?assertMatch(badarg, Error)
+    end.
+
+badarg_224_update_test() ->
+    Ctx1 = erlsha2:sha224_init(),
+    try
+        NCtx1 = erlsha2:sha224_update(Ctx1, not_an_iolist),
+        erlsha2:sha224_final(NCtx1)
+    catch
+        error:badarg ->
+            ok;
+        Type1:Error1 ->
+            ?assertMatch(error, Type1),
+            ?assertMatch(badarg, Error1)
+    end,
+    Ctx2 = erlsha2:sha224_init(),
+    try
+        NCtx2 = erlsha2:sha224_update(not_a_context, <<"a">>),
+        erlsha2:sha224_final(NCtx2)
+    catch
+        error:badarg ->
+            ok;
+        Type2:Error2 ->
+            ?assertMatch(error, Type2),
+            ?assertMatch(badarg, Error2)
+    end.
+
+badarg_256_test() ->
+    try
+        erlsha2:sha256(1234)
+    catch
+        error:badarg ->
+            ok;
+        Type:Error ->
+            ?assertMatch(error, Type),
+            ?assertMatch(badarg, Error)
+    end.
+
+badarg_256_update_test() ->
+    Ctx1 = erlsha2:sha256_init(),
+    try
+        NCtx1 = erlsha2:sha256_update(Ctx1, not_an_iolist),
+        erlsha2:sha256_final(NCtx1)
+    catch
+        error:badarg ->
+            ok;
+        Type1:Error1 ->
+            ?assertMatch(error, Type1),
+            ?assertMatch(badarg, Error1)
+    end,
+    Ctx2 = erlsha2:sha256_init(),
+    try
+        NCtx2 = erlsha2:sha256_update(not_a_context, <<"a">>),
+        erlsha2:sha256_final(NCtx2)
+    catch
+        error:badarg ->
+            ok;
+        Type2:Error2 ->
+            ?assertMatch(error, Type2),
+            ?assertMatch(badarg, Error2)
+    end.
+
+badarg_384_test() ->
+    try
+        erlsha2:sha384(1234)
+    catch
+        error:badarg ->
+            ok;
+        Type:Error ->
+            ?assertMatch(error, Type),
+            ?assertMatch(badarg, Error)
+    end.
+
+badarg_384_update_test() ->
+    Ctx1 = erlsha2:sha384_init(),
+    try
+        NCtx1 = erlsha2:sha384_update(Ctx1, not_an_iolist),
+        erlsha2:sha384_final(NCtx1)
+    catch
+        error:badarg ->
+            ok;
+        Type1:Error1 ->
+            ?assertMatch(error, Type1),
+            ?assertMatch(badarg, Error1)
+    end,
+    Ctx2 = erlsha2:sha384_init(),
+    try
+        NCtx2 = erlsha2:sha384_update(not_a_context, <<"a">>),
+        erlsha2:sha384_final(NCtx2)
+    catch
+        error:badarg ->
+            ok;
+        Type2:Error2 ->
+            ?assertMatch(error, Type2),
+            ?assertMatch(badarg, Error2)
+    end.
+
+badarg_512_test() ->
+    try
+        erlsha2:sha512(1234)
+    catch
+        error:badarg ->
+            ok;
+        Type:Error ->
+            ?assertMatch(error, Type),
+            ?assertMatch(badarg, Error)
+    end.
+
+badarg_512_update_test() ->
+    Ctx1 = erlsha2:sha512_init(),
+    try
+        NCtx1 = erlsha2:sha512_update(Ctx1, not_an_iolist),
+        erlsha2:sha512_final(NCtx1)
+    catch
+        error:badarg ->
+            ok;
+        Type1:Error1 ->
+            ?assertMatch(error, Type1),
+            ?assertMatch(badarg, Error1)
+    end,
+    Ctx2 = erlsha2:sha512_init(),
+    try
+        NCtx2 = erlsha2:sha512_update(not_a_context, <<"a">>),
+        erlsha2:sha512_final(NCtx2)
+    catch
+        error:badarg ->
+            ok;
+        Type2:Error2 ->
+            ?assertMatch(error, Type2),
+            ?assertMatch(badarg, Error2)
+    end.
+
 sha224_test(Vectors) ->
     Expected224 = sha224_expected(),
     lists:foreach(fun({Vector, Expected}) ->
