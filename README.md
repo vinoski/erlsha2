@@ -9,8 +9,8 @@ the C NIF implementations.
 
 See the following links for details:
 
-* [Secure Hash Standard (PDF)](href="http://csrc.nist.gov/publications/fips/fips180-3/fips180-3_final.pdf")
-* [Wikipedia SHA1 article](href="http://en.wikipedia.org/wiki/SHA1")
+* [Secure Hash Standard (PDF)](http://csrc.nist.gov/publications/fips/fips180-3/fips180-3_final.pdf)
+* [Wikipedia SHA1 article](http://en.wikipedia.org/wiki/SHA1)
 
 The code implemented here was written by simply following the
 algorithm descriptions provided in the standard. Provided functions
