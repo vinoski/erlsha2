@@ -472,6 +472,10 @@ sha(
     ERL_NIF_TERM args[2] = {ctx, argv[0]};
     ERL_NIF_TERM nargs[1];
     if (!hd_update(env, 2, args)) {
+        ContextUnion ctxu;
+        ErlNifResourceType* ctx_type = (ErlNifResourceType*)enif_priv_data(env);
+        enif_get_resource(env, argv[0], ctx_type, &ctxu.v);
+        enif_release_resource(ctxu.c);
         return enif_make_badarg(env);
     }
     nargs[0] = ctx;
