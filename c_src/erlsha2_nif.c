@@ -327,7 +327,7 @@ context_init(Context* ctx, void* hashes, size_t hsize, size_t padsize)
 static ERL_NIF_TERM
 context_fini(ErlNifEnv* env, Context* ctx, size_t dsize, ChunkHandler handler)
 {
-    ERL_NIF_TERM term;
+    ERL_NIF_TERM result;
     ctx->bitlen += ctx->count*8;
     pad(0, 0, ctx);
     handler(ctx, ctx->bytes);
@@ -353,9 +353,9 @@ context_fini(ErlNifEnv* env, Context* ctx, size_t dsize, ChunkHandler handler)
     if (ctx->digest.size != dsize) {
         enif_realloc_binary(&ctx->digest, dsize);
     }
-    term = enif_make_binary(env, &ctx->digest);
-    enif_release_resource(ctx);
-    return term;
+    result = enif_make_binary(env, &ctx->digest);
+    ctx->digest.size = 0;
+    return result;
 }
 
 #define CH(x,y,z) (((x) & (y)) ^ (~(x) & z))
@@ -472,10 +472,6 @@ sha(
     ERL_NIF_TERM args[2] = {ctx, argv[0]};
     ERL_NIF_TERM nargs[1];
     if (!hd_update(env, 2, args)) {
-        ContextUnion ctxu;
-        ErlNifResourceType* ctx_type = (ErlNifResourceType*)enif_priv_data(env);
-        enif_get_resource(env, argv[0], ctx_type, &ctxu.v);
-        enif_release_resource(ctxu.c);
         return enif_make_badarg(env);
     }
     nargs[0] = ctx;
@@ -485,10 +481,13 @@ sha(
 static ERL_NIF_TERM
 hd224_init(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 {
+    ERL_NIF_TERM result;
     ErlNifResourceType* ctx_type = (ErlNifResourceType*)enif_priv_data(env);
     Context* ctx = (Context*)enif_alloc_resource(ctx_type, sizeof(Context));
     context_init(ctx, H224, sizeof H224, PADDED_SIZE_2XX);
-    return enif_make_resource(env, ctx);
+    result = enif_make_resource(env, ctx);
+    enif_release_resource(ctx);
+    return result;
 }
 
 static int
@@ -545,10 +544,13 @@ sha224_final(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 static ERL_NIF_TERM
 hd256_init(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 {
+    ERL_NIF_TERM result;
     ErlNifResourceType* ctx_type = (ErlNifResourceType*)enif_priv_data(env);
     Context* ctx = (Context*)enif_alloc_resource(ctx_type, sizeof(Context));
     context_init(ctx, H256, sizeof H256, PADDED_SIZE_2XX);
-    return enif_make_resource(env, ctx);
+    result = enif_make_resource(env, ctx);
+    enif_release_resource(ctx);
+    return result;
 }
 
 static ERL_NIF_TERM
@@ -631,10 +633,13 @@ sha5xx_chunk(Context* ctx, unsigned char* chunk)
 static ERL_NIF_TERM
 hd384_init(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 {
+    ERL_NIF_TERM result;
     ErlNifResourceType* ctx_type = (ErlNifResourceType*)enif_priv_data(env);
     Context* ctx = (Context*)enif_alloc_resource(ctx_type, sizeof(Context));
     context_init(ctx, H384, sizeof H384, PADDED_SIZE_5XX);
-    return enif_make_resource(env, ctx);
+    result = enif_make_resource(env, ctx);
+    enif_release_resource(ctx);
+    return result;
 }
 
 static int
@@ -691,10 +696,13 @@ sha384_final(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 static ERL_NIF_TERM
 hd512_init(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 {
+    ERL_NIF_TERM result;
     ErlNifResourceType* ctx_type = (ErlNifResourceType*)enif_priv_data(env);
     Context* ctx = (Context*)enif_alloc_resource(ctx_type, sizeof(Context));
     context_init(ctx, H512, sizeof H512, PADDED_SIZE_5XX);
-    return enif_make_resource(env, ctx);
+    result = enif_make_resource(env, ctx);
+    enif_release_resource(ctx);
+    return result;
 }
 
 static ERL_NIF_TERM
@@ -751,11 +759,20 @@ static ErlNifFunc funcs[] = {
     {"sha512_final", 1, sha512_final},
 };
 
+static void
+context_dtor(ErlNifEnv* env, void* obj)
+{
+    Context* ctx = (Context*)obj;
+    if (ctx != NULL && ctx->digest.size > 0) {
+        enif_release_binary(&ctx->digest);
+    }
+}
+
 static int
 nifload(ErlNifEnv* env, void** priv_data, ERL_NIF_TERM load_info)
 {
-    *priv_data = enif_open_resource_type(env, NULL, "erlsha2_context", NULL,
-                                         ERL_NIF_RT_CREATE, NULL);
+    *priv_data = enif_open_resource_type(env, NULL, "erlsha2_context",
+                                         context_dtor, ERL_NIF_RT_CREATE, NULL);
     return 0;
 }
 
