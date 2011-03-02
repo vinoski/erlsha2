@@ -44,7 +44,7 @@ badarg_224_update_test() ->
             ?assertMatch(error, Type1),
             ?assertMatch(badarg, Error1)
     end,
-    Ctx2 = erlsha2:sha224_init(),
+    _Ctx2 = erlsha2:sha224_init(),
     try
         NCtx2 = erlsha2:sha224_update(not_a_context, <<"a">>),
         erlsha2:sha224_final(NCtx2)
@@ -79,7 +79,7 @@ badarg_256_update_test() ->
             ?assertMatch(error, Type1),
             ?assertMatch(badarg, Error1)
     end,
-    Ctx2 = erlsha2:sha256_init(),
+    _Ctx2 = erlsha2:sha256_init(),
     try
         NCtx2 = erlsha2:sha256_update(not_a_context, <<"a">>),
         erlsha2:sha256_final(NCtx2)
@@ -114,7 +114,7 @@ badarg_384_update_test() ->
             ?assertMatch(error, Type1),
             ?assertMatch(badarg, Error1)
     end,
-    Ctx2 = erlsha2:sha384_init(),
+    _Ctx2 = erlsha2:sha384_init(),
     try
         NCtx2 = erlsha2:sha384_update(not_a_context, <<"a">>),
         erlsha2:sha384_final(NCtx2)
@@ -149,7 +149,7 @@ badarg_512_update_test() ->
             ?assertMatch(error, Type1),
             ?assertMatch(badarg, Error1)
     end,
-    Ctx2 = erlsha2:sha512_init(),
+    _Ctx2 = erlsha2:sha512_init(),
     try
         NCtx2 = erlsha2:sha512_update(not_a_context, <<"a">>),
         erlsha2:sha512_final(NCtx2)
