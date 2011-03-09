@@ -198,7 +198,8 @@ init() ->
                                Dir ->
                                    Dir
                            end, atom_to_list(?MODULE) ++ "_nif"),
-    erlang:load_nif(SoName, 0).
+    erlang:load_nif(SoName, 0),
+    ok.
 
 %% @spec sha224(message()) -> digest()
 %% where
