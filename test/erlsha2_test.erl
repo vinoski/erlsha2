@@ -171,6 +171,7 @@ sha224_test(Vectors) ->
 
 sha224_update_test(Vectors) ->
     Expected224 = sha224_expected(),
+    ExpectedActual = lists:zip(Vectors, Expected224),
     lists:foreach(fun({Vector, Expected}) ->
                           Ctx = erlsha2:sha224_init(),
                           NCtx = case size(Vector) of
@@ -187,7 +188,23 @@ sha224_update_test(Vectors) ->
                                  end,
                           Actual = erlsha2:sha224_final(NCtx),
                           ?assertMatch(Expected, Actual)
-                  end, lists:zip(Vectors, Expected224)),
+                  end, ExpectedActual),
+    lists:foreach(fun({Vector, Expected}) ->
+                          case size(Vector) of
+                              0 ->
+                                  ok;
+                              _ ->
+                                  Ctx = erlsha2:sha224_init(),
+                                  Vals = binary_to_list(Vector),
+                                  NCtx = lists:foldl(
+                                           fun(V, LastCtx) ->
+                                                   erlsha2:sha224_update(
+                                                     LastCtx, <<V:8>>)
+                                           end, Ctx, Vals),
+                                  Actual = erlsha2:sha224_final(NCtx),
+                                  ?assertMatch(Expected, Actual)
+                          end
+                  end, ExpectedActual),
     ok.
 
 sha256_test(Vectors) ->
@@ -200,6 +217,7 @@ sha256_test(Vectors) ->
 
 sha256_update_test(Vectors) ->
     Expected256 = sha256_expected(),
+    ExpectedActual = lists:zip(Vectors, Expected256),
     lists:foreach(fun({Vector, Expected}) ->
                           Ctx = erlsha2:sha256_init(),
                           NCtx = case size(Vector) of
@@ -216,7 +234,23 @@ sha256_update_test(Vectors) ->
                                  end,
                           Actual = erlsha2:sha256_final(NCtx),
                           ?assertMatch(Expected, Actual)
-                  end, lists:zip(Vectors, Expected256)),
+                  end, ExpectedActual),
+    lists:foreach(fun({Vector, Expected}) ->
+                          case size(Vector) of
+                              0 ->
+                                  ok;
+                              _ ->
+                                  Ctx = erlsha2:sha256_init(),
+                                  Vals = binary_to_list(Vector),
+                                  NCtx = lists:foldl(
+                                           fun(V, LastCtx) ->
+                                                   erlsha2:sha256_update(
+                                                     LastCtx, <<V:8>>)
+                                           end, Ctx, Vals),
+                                  Actual = erlsha2:sha256_final(NCtx),
+                                  ?assertMatch(Expected, Actual)
+                          end
+                  end, ExpectedActual),
     ok.
 
 sha384_test(Vectors) ->
@@ -229,6 +263,7 @@ sha384_test(Vectors) ->
 
 sha384_update_test(Vectors) ->
     Expected384 = sha384_expected(),
+    ExpectedActual = lists:zip(Vectors, Expected384),
     lists:foreach(fun({Vector, Expected}) ->
                           Ctx = erlsha2:sha384_init(),
                           NCtx = case size(Vector) of
@@ -245,7 +280,23 @@ sha384_update_test(Vectors) ->
                                  end,
                           Actual = erlsha2:sha384_final(NCtx),
                           ?assertMatch(Expected, Actual)
-                  end, lists:zip(Vectors, Expected384)),
+                  end, ExpectedActual),
+    lists:foreach(fun({Vector, Expected}) ->
+                          case size(Vector) of
+                              0 ->
+                                  ok;
+                              _ ->
+                                  Ctx = erlsha2:sha384_init(),
+                                  Vals = binary_to_list(Vector),
+                                  NCtx = lists:foldl(
+                                           fun(V, LastCtx) ->
+                                                   erlsha2:sha384_update(
+                                                     LastCtx, <<V:8>>)
+                                           end, Ctx, Vals),
+                                  Actual = erlsha2:sha384_final(NCtx),
+                                  ?assertMatch(Expected, Actual)
+                          end
+                  end, ExpectedActual),
     ok.
 
 sha512_test(Vectors) ->
@@ -258,6 +309,7 @@ sha512_test(Vectors) ->
 
 sha512_update_test(Vectors) ->
     Expected512 = sha512_expected(),
+    ExpectedActual = lists:zip(Vectors, Expected512),
     lists:foreach(fun({Vector, Expected}) ->
                           Ctx = erlsha2:sha512_init(),
                           NCtx = case size(Vector) of
@@ -274,7 +326,23 @@ sha512_update_test(Vectors) ->
                                  end,
                           Actual = erlsha2:sha512_final(NCtx),
                           ?assertMatch(Expected, Actual)
-                  end, lists:zip(Vectors, Expected512)),
+                  end, ExpectedActual),
+    lists:foreach(fun({Vector, Expected}) ->
+                          case size(Vector) of
+                              0 ->
+                                  ok;
+                              _ ->
+                                  Ctx = erlsha2:sha512_init(),
+                                  Vals = binary_to_list(Vector),
+                                  NCtx = lists:foldl(
+                                           fun(V, LastCtx) ->
+                                                   erlsha2:sha512_update(
+                                                     LastCtx, <<V:8>>)
+                                           end, Ctx, Vals),
+                                  Actual = erlsha2:sha512_final(NCtx),
+                                  ?assertMatch(Expected, Actual)
+                          end
+                  end, ExpectedActual),
     ok.
 
 read_test_vectors() ->
