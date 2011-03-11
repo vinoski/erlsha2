@@ -771,8 +771,14 @@ context_dtor(ErlNifEnv* env, void* obj)
 static int
 nifload(ErlNifEnv* env, void** priv_data, ERL_NIF_TERM load_info)
 {
-    *priv_data = enif_open_resource_type(env, NULL, "erlsha2_context",
-                                         context_dtor, ERL_NIF_RT_CREATE, NULL);
+    *priv_data = enif_open_resource_type(
+        env,
+        NULL,
+        "erlsha2_context",
+        context_dtor,
+        ERL_NIF_RT_CREATE|ERL_NIF_RT_TAKEOVER,
+        NULL
+    );
     return 0;
 }
 
