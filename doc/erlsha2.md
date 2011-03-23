@@ -29,19 +29,19 @@ article](http://en.wikipedia.org/wiki/SHA1). Find the code [here](http://github.
 
 
 
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#sha224-1">sha224/1</a></td><td>Returns a SHA-224 hexadecimal digest.</td></tr><tr><td valign="top"><a href="#sha224_final-1">sha224_final/1</a></td><td>Finishes the update of a SHA-224 Context and returns the computed
-message digest.</td></tr><tr><td valign="top"><a href="#sha224_init-0">sha224_init/0</a></td><td>Creates a SHA-224 context to be in subsequent calls to
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#sha224-1">sha224/1</a></td><td>Returns a SHA-224 hexadecimal digest.</td></tr></tr><tr><td valign="top"><a href="#sha224_init-0">sha224_init/0</a></td><td>Creates a SHA-224 context to be in subsequent calls to
 sha224_update/2.</td></tr><tr><td valign="top"><a href="#sha224_update-2">sha224_update/2</a></td><td>Updates a SHA-224 context with message data and returns a new
-context.</td></tr><tr><td valign="top"><a href="#sha256-1">sha256/1</a></td><td>Returns a SHA-256 hexadecimal digest.</td></tr><tr><td valign="top"><a href="#sha256_final-1">sha256_final/1</a></td><td>Finishes the update of a SHA-256 Context and returns the computed
-message digest.</td></tr><tr><td valign="top"><a href="#sha256_init-0">sha256_init/0</a></td><td>Creates a SHA-256 context to be in subsequent calls to
+context.</td></tr><tr><td valign="top"><a href="#sha224_final-1">sha224_final/1</a></td><td>Finishes the update of a SHA-224 Context and returns the computed
+message digest.</td><tr><td valign="top"><a href="#sha256-1">sha256/1</a></td><td>Returns a SHA-256 hexadecimal digest.</td></tr><tr><td valign="top"><a href="#sha256_init-0">sha256_init/0</a></td><td>Creates a SHA-256 context to be in subsequent calls to
 sha256_update/2.</td></tr><tr><td valign="top"><a href="#sha256_update-2">sha256_update/2</a></td><td>Updates a SHA-256 context with message data and returns a new
-context.</td></tr><tr><td valign="top"><a href="#sha384-1">sha384/1</a></td><td>Returns a SHA-384 hexadecimal digest.</td></tr><tr><td valign="top"><a href="#sha384_final-1">sha384_final/1</a></td><td>Finishes the update of a SHA-384 Context and returns the computed
-message digest.</td></tr><tr><td valign="top"><a href="#sha384_init-0">sha384_init/0</a></td><td>Creates a SHA-384 context to be in subsequent calls to
+context.</td></tr><tr><td valign="top"><a href="#sha256_final-1">sha256_final/1</a></td><td>Finishes the update of a SHA-256 Context and returns the computed
+message digest.</td></tr><tr><td valign="top"><a href="#sha384-1">sha384/1</a></td><td>Returns a SHA-384 hexadecimal digest.</td></tr><tr><td valign="top"><a href="#sha384_init-0">sha384_init/0</a></td><td>Creates a SHA-384 context to be in subsequent calls to
 sha384_update/2.</td></tr><tr><td valign="top"><a href="#sha384_update-2">sha384_update/2</a></td><td>Updates a SHA-384 context with message data and returns a new
-context.</td></tr><tr><td valign="top"><a href="#sha512-1">sha512/1</a></td><td>Returns a SHA-512 hexadecimal digest.</td></tr><tr><td valign="top"><a href="#sha512_final-1">sha512_final/1</a></td><td>Finishes the update of a SHA-512 Context and returns the computed
-message digest.</td></tr><tr><td valign="top"><a href="#sha512_init-0">sha512_init/0</a></td><td>Creates a SHA-512 context to be in subsequent calls to
+context.</td></tr><tr><td valign="top"><a href="#sha384_final-1">sha384_final/1</a></td><td>Finishes the update of a SHA-384 Context and returns the computed
+message digest.</td></tr><tr><td valign="top"><a href="#sha512-1">sha512/1</a></td><td>Returns a SHA-512 hexadecimal digest.</td></tr><tr><td valign="top"><a href="#sha512_init-0">sha512_init/0</a></td><td>Creates a SHA-512 context to be in subsequent calls to
 sha512_update/2.</td></tr><tr><td valign="top"><a href="#sha512_update-2">sha512_update/2</a></td><td>Updates a SHA-512 context with message data and returns a new
-context.</td></tr></table>
+context.</td></tr><tr><td valign="top"><a href="#sha512_final-1">sha512_final/1</a></td><td>Finishes the update of a SHA-512 Context and returns the computed
+message digest.</td></tr></table>
 
 
 <a name="functions"></a>
@@ -59,33 +59,15 @@ context.</td></tr></table>
 
 
 
-<tt>sha224(M::<a href="#type-message">message()</a>) -> <a href="#type-digest">digest()</a></tt>* `<a name="type-message"></a>`message()` = binary() | [iolist()](#type-iolist)`
-* `<a name="type-digest"></a>`digest()` = binary()`
+<tt>sha224(M::message()) -> digest()</tt><br/>* `message() = binary() | [iolist()](#type-iolist)`<br/>
+* `digest() = binary()`
 
 
 
 
 Returns a SHA-224 hexadecimal digest.
 
-<a name="sha224_final-1"></a>
 
-
-<h3>sha224_final/1</h3>
-
-
-
-
-
-<tt>sha224_final(Context::<a href="#type-context">context()</a>) -> <a href="#type-digest">digest()</a></tt>* `<a name="type-context"></a>`context()` = binary()`
-* `<a name="type-digest"></a>`digest()` = binary()`
-
-
-
-
-Finishes the update of a SHA-224 Context and returns the computed
-message digest.
-
-<a name="sha224_init-0"></a>
 
 
 <h3>sha224_init/0</h3>
@@ -94,7 +76,7 @@ message digest.
 
 
 
-<tt>sha224_init() -> <a href="#type-context">context()</a></tt>* `<a name="type-context"></a>`context()` = binary()`
+<tt>sha224_init() -> context()</tt><br/>* `context() = binary()`
 
 
 
@@ -102,7 +84,7 @@ message digest.
 Creates a SHA-224 context to be in subsequent calls to
 sha224_update/2.
 
-<a name="sha224_update-2"></a>
+
 
 
 <h3>sha224_update/2</h3>
@@ -111,9 +93,9 @@ sha224_update/2.
 
 
 
-<tt>sha224_update(Context::<a href="#type-context">context()</a>, M::<a href="#type-message">message()</a>) -> <a href="#type-newcontext">newcontext()</a></tt>* `<a name="type-message"></a>`message()` = binary() | [iolist()](#type-iolist)`
-* `<a name="type-context"></a>`context()` = binary()`
-* `<a name="type-newcontext"></a>`newcontext()` = binary()`
+<tt>sha224_update(Context::context(), M::message()) -> newcontext()</tt><br/>* `message() = binary() | [iolist()](#type-iolist)`<br/>
+* `context() = binary()`<br/>
+* `newcontext() = binary()`
 
 
 
@@ -121,7 +103,25 @@ sha224_update/2.
 Updates a SHA-224 context with message data and returns a new
 context.
 
-<a name="sha256-1"></a>
+
+
+
+<h3>sha224_final/1</h3>
+
+
+
+
+
+<tt>sha224_final(Context::context()) -> digest()</tt><br/>* `context() = binary()`<br/>
+* `digest() = binary()`
+
+
+
+
+Finishes the update of a SHA-224 Context and returns the computed
+message digest.
+
+
 
 
 <h3>sha256/1</h3>
@@ -130,33 +130,15 @@ context.
 
 
 
-<tt>sha256(M::<a href="#type-message">message()</a>) -> <a href="#type-digest">digest()</a></tt>* `<a name="type-message"></a>`message()` = binary() | [iolist()](#type-iolist)`
-* `<a name="type-digest"></a>`digest()` = binary()`
+<tt>sha256(M::message()) -> digest()</tt><br/>* `message() = binary() | [iolist()](#type-iolist)`<br/>
+* `digest() = binary()`
 
 
 
 
 Returns a SHA-256 hexadecimal digest.
 
-<a name="sha256_final-1"></a>
 
-
-<h3>sha256_final/1</h3>
-
-
-
-
-
-<tt>sha256_final(Context::<a href="#type-context">context()</a>) -> <a href="#type-digest">digest()</a></tt>* `<a name="type-context"></a>`context()` = binary()`
-* `<a name="type-digest"></a>`digest()` = binary()`
-
-
-
-
-Finishes the update of a SHA-256 Context and returns the computed
-message digest.
-
-<a name="sha256_init-0"></a>
 
 
 <h3>sha256_init/0</h3>
@@ -165,7 +147,7 @@ message digest.
 
 
 
-<tt>sha256_init() -> <a href="#type-context">context()</a></tt>* `<a name="type-context"></a>`context()` = binary()`
+<tt>sha256_init() -> context()</tt><br/>* `context() = binary()`
 
 
 
@@ -173,7 +155,7 @@ message digest.
 Creates a SHA-256 context to be in subsequent calls to
 sha256_update/2.
 
-<a name="sha256_update-2"></a>
+
 
 
 <h3>sha256_update/2</h3>
@@ -182,9 +164,9 @@ sha256_update/2.
 
 
 
-<tt>sha256_update(Context::<a href="#type-context">context()</a>, M::<a href="#type-message">message()</a>) -> <a href="#type-newcontext">newcontext()</a></tt>* `<a name="type-message"></a>`message()` = binary() | [iolist()](#type-iolist)`
-* `<a name="type-context"></a>`context()` = binary()`
-* `<a name="type-newcontext"></a>`newcontext()` = binary()`
+<tt>sha256_update(Context::context(), M::message()) -> newcontext()</tt><br/>* `message() = binary() | [iolist()](#type-iolist)`<br/>
+* `context() = binary()`<br/>
+* `newcontext() = binary()`
 
 
 
@@ -192,7 +174,25 @@ sha256_update/2.
 Updates a SHA-256 context with message data and returns a new
 context.
 
-<a name="sha384-1"></a>
+
+
+
+<h3>sha256_final/1</h3>
+
+
+
+
+
+<tt>sha256_final(Context::context()) -> digest()</tt><br/>* `context() = binary()`<br/>
+* `digest() = binary()`
+
+
+
+
+Finishes the update of a SHA-256 Context and returns the computed
+message digest.
+
+
 
 
 <h3>sha384/1</h3>
@@ -201,8 +201,8 @@ context.
 
 
 
-<tt>sha384(M::<a href="#type-message">message()</a>) -> <a href="#type-digest">digest()</a></tt>* `<a name="type-message"></a>`message()` = binary() | [iolist()](#type-iolist)`
-* `<a name="type-digest"></a>`digest()` = binary()`
+<tt>sha384(M::message()) -> digest()</tt><br/>* `message() = binary() | [iolist()](#type-iolist)`<br/>
+* `digest() = binary()`
 
 
 
@@ -210,25 +210,7 @@ context.
 Returns a SHA-384 hexadecimal digest.
 If the argument is a binary, the result is a binary, otherwise the
 
-<a name="sha384_final-1"></a>
 
-
-<h3>sha384_final/1</h3>
-
-
-
-
-
-<tt>sha384_final(Context::<a href="#type-context">context()</a>) -> <a href="#type-digest">digest()</a></tt>* `<a name="type-context"></a>`context()` = binary()`
-* `<a name="type-digest"></a>`digest()` = binary()`
-
-
-
-
-Finishes the update of a SHA-384 Context and returns the computed
-message digest.
-
-<a name="sha384_init-0"></a>
 
 
 <h3>sha384_init/0</h3>
@@ -237,7 +219,7 @@ message digest.
 
 
 
-<tt>sha384_init() -> <a href="#type-context">context()</a></tt>* `<a name="type-context"></a>`context()` = binary()`
+<tt>sha384_init() -> context()</tt><br/>* `context() = binary()`
 
 
 
@@ -245,7 +227,7 @@ message digest.
 Creates a SHA-384 context to be in subsequent calls to
 sha384_update/2.
 
-<a name="sha384_update-2"></a>
+
 
 
 <h3>sha384_update/2</h3>
@@ -254,9 +236,9 @@ sha384_update/2.
 
 
 
-<tt>sha384_update(Context::<a href="#type-context">context()</a>, M::<a href="#type-message">message()</a>) -> <a href="#type-newcontext">newcontext()</a></tt>* `<a name="type-message"></a>`message()` = binary() | [iolist()](#type-iolist)`
-* `<a name="type-context"></a>`context()` = binary()`
-* `<a name="type-newcontext"></a>`newcontext()` = binary()`
+<tt>sha384_update(Context::context(), M::message()) -> newcontext()</tt><br/>* `message() = binary() | [iolist()](#type-iolist)`<br/>
+* `context() = binary()`<br/>
+* `newcontext() = binary()`
 
 
 
@@ -264,7 +246,25 @@ sha384_update/2.
 Updates a SHA-384 context with message data and returns a new
 context.
 
-<a name="sha512-1"></a>
+
+
+
+<h3>sha384_final/1</h3>
+
+
+
+
+
+<tt>sha384_final(Context::context()) -> digest()</tt><br/>* `context() = binary()`<br/>
+* `digest() = binary()`
+
+
+
+
+Finishes the update of a SHA-384 Context and returns the computed
+message digest.
+
+
 
 
 <h3>sha512/1</h3>
@@ -273,33 +273,15 @@ context.
 
 
 
-<tt>sha512(M::<a href="#type-message">message()</a>) -> <a href="#type-digest">digest()</a></tt>* `<a name="type-message"></a>`message()` = binary() | [iolist()](#type-iolist)`
-* `<a name="type-digest"></a>`digest()` = binary()`
+<tt>sha512(M::message()) -> digest()</tt><br/>* `message() = binary() | [iolist()](#type-iolist)`<br/>
+* `digest() = binary()`
 
 
 
 
 Returns a SHA-512 hexadecimal digest.
 
-<a name="sha512_final-1"></a>
 
-
-<h3>sha512_final/1</h3>
-
-
-
-
-
-<tt>sha512_final(Context::<a href="#type-context">context()</a>) -> <a href="#type-digest">digest()</a></tt>* `<a name="type-context"></a>`context()` = binary()`
-* `<a name="type-digest"></a>`digest()` = binary()`
-
-
-
-
-Finishes the update of a SHA-512 Context and returns the computed
-message digest.
-
-<a name="sha512_init-0"></a>
 
 
 <h3>sha512_init/0</h3>
@@ -308,7 +290,7 @@ message digest.
 
 
 
-<tt>sha512_init() -> <a href="#type-context">context()</a></tt>* `<a name="type-context"></a>`context()` = binary()`
+<tt>sha512_init() -> context()</tt><br/>* `context() = binary()`
 
 
 
@@ -316,7 +298,7 @@ message digest.
 Creates a SHA-512 context to be in subsequent calls to
 sha512_update/2.
 
-<a name="sha512_update-2"></a>
+
 
 
 <h3>sha512_update/2</h3>
@@ -325,15 +307,31 @@ sha512_update/2.
 
 
 
-<tt>sha512_update(Context::<a href="#type-context">context()</a>, M::<a href="#type-message">message()</a>) -> <a href="#type-newcontext">newcontext()</a></tt>* `<a name="type-message"></a>`message()` = binary() | [iolist()](#type-iolist)`
-* `<a name="type-context"></a>`context()` = binary()`
-* `<a name="type-newcontext"></a>`newcontext()` = binary()`
+<tt>sha512_update(Context::context(), M::message()) -> newcontext()</tt><br/>* `message() = binary() | [iolist()](#type-iolist)`<br/>
+* `context() = binary()`<br/>
+* `newcontext() = binary()`<br/>
 
 
 
 
 Updates a SHA-512 context with message data and returns a new
 context.
+
+<h3>sha512_final/1</h3>
+
+
+
+
+
+<tt>sha512_final(Context::context()) -> digest()</tt><br/>* `context() = binary()`<br/>
+* `digest() = binary()`
+
+
+
+
+Finishes the update of a SHA-512 Context and returns the computed
+message digest.
+
 
 
 _Generated by EDoc, Mar 23 2011, 07:43:42._

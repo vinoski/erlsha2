@@ -6,5 +6,6 @@ doc/erlang.png
 doc/stylesheet.css
 doc/edoc-info
 doc/README.md
+doc/*.html
 ebin
 priv
