@@ -9,6 +9,8 @@ if [[ $1 = clean ]]; then
     exit 0
 fi
 
+test -f $CONFIG_HDR && exit 0
+
 [[ -n "$CC" ]]
 
 tmpfile=`mktemp /tmp/erlsha2.XXXXXX`
