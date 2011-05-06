@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 CONFIG_HDR=c_src/config.h
 
 if [[ $1 = clean ]]; then
@@ -9,9 +7,14 @@ if [[ $1 = clean ]]; then
     exit 0
 fi
 
-test -f $CONFIG_HDR && exit 0
+[[ -f $CONFIG_HDR ]] && exit 0
 
-[[ -n "$CC" ]]
+if [[ -z "$CC" ]]; then
+    echo CC environment variable not specified
+    exit 1
+fi
+
+set -e
 
 tmpfile=`mktemp /tmp/erlsha2.XXXXXX`
 tmpcfile=${tmpfile}.c
