@@ -1,18 +1,6 @@
 #!/usr/bin/env bash
 
-CONFIG_HDR=c_src/config.h
-
-if [[ $1 = clean ]]; then
-    rm -f $CONFIG_HDR
-    exit 0
-fi
-
-[[ -f $CONFIG_HDR ]] && exit 0
-
-if [[ -z "$CC" ]]; then
-    echo CC environment variable not specified
-    exit 1
-fi
+CONFIG_HDR=$1
 
 set -e
 
