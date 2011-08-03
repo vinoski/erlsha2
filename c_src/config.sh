@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+CC=${CC:="gcc"}
 CONFIG_HDR=c_src/config.h
 
 if [[ $1 = clean ]]; then
@@ -8,11 +9,6 @@ if [[ $1 = clean ]]; then
 fi
 
 [[ -f $CONFIG_HDR ]] && exit 0
-
-if [[ -z "$CC" ]]; then
-    echo CC environment variable not specified
-    exit 1
-fi
 
 set -e
 
