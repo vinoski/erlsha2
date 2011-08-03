@@ -1,14 +1,6 @@
 #!/usr/bin/env bash
 
-CC=${CC:="gcc"}
-CONFIG_HDR=c_src/config.h
-
-if [[ $1 = clean ]]; then
-    rm -f $CONFIG_HDR
-    exit 0
-fi
-
-[[ -f $CONFIG_HDR ]] && exit 0
+CONFIG_HDR=$1
 
 set -e
 
