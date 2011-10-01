@@ -2,10 +2,11 @@
 
 ## Description
 
-The **erlsha2** library application implements the SHA-2 Secure Hash Standard
-(SHA-224, SHA-256, SHA-384, SHA-512) using Erlang NIFs. It also
-provides pure Erlang implementations, though they are much slower than
-the C NIF implementations.
+The **erlsha2** library application implements the SHA-2 Secure Hash
+Standard (SHA-224, SHA-256, SHA-384, SHA-512) using Erlang NIFs. (It
+also provides pure Erlang implementations, though they are much slower
+than the C NIF implementations.) It also includes HMAC wrappers for
+the SHA-2 functions.
 
 See the following links for details:
 
