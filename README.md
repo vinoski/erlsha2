@@ -38,6 +38,9 @@ implementation, thereby gaining access to the pure Erlang
 implementation instead, but note that it's much slower than the C
 code.
 
+If you run into any build trouble, first make sure the version of
+`rebar` you're using is reasonably up to date.
+
 ### Erlang Version
 
 The **erlsha2** app requires Erlang R14B or later.
