@@ -1,0 +1,3 @@
+{application,erlsha2}.
+{packages,[]}.
+{modules,[erlsha2,hmac]}.
