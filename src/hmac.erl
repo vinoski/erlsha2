@@ -16,6 +16,12 @@
          hmac384/2,
          hmac512/2]).
 
+-ifdef(USE_CRYPTO_SHA_MAC).
+-define(CRYPTO_HMAC(Key,Data), crypto:sha_mac(Key,Data)).
+-else.
+-define(CRYPTO_HMAC(Key,Data), crypto:hmac(sha,Key,Data)).
+-endif.
+
 -define(SHA_224_BLOCKSIZE, 64).
 -define(SHA_256_BLOCKSIZE, 64).
 -define(SHA_384_BLOCKSIZE, 128).
@@ -76,7 +82,7 @@ hmac512(Key, Data) ->
 %% @doc Compute a SHA MAC message authentication code from key and data.
 %%
 hmac(Key, Data) ->
-    crypto:sha_mac(Key, Data).
+    ?CRYPTO_HMAC(Key, Data).
 
 %% @spec hmac(key(), data(), hash(), blocksize()) -> mac()
 %% where
