@@ -35,29 +35,27 @@ hexlify(Binary) when is_binary(Binary) ->
     lists:flatten([io_lib:format("~2.16.0B", [B]) ||
                       B <- binary_to_list(Binary)]).
 
+%% @spec hexlify_to_bin(binary()) -> binary()
+%% @doc Convert binary to equivalent hexadecimal binary
+%%
 hexlify_to_bin(Binary)->
-    bin_to_hexstr(Binary,[]).
-
-hex(N) when N < 10 ->
-    <<($0+N)>>;
-hex(N) when N >= 10, N < 16 ->
-    <<($a+(N-10))>>.
-
-to_hex(N) when N < 256 ->
-    <<(hex(N div 16))/binary, (hex(N rem 16))/binary>>.
-
-bin_to_hexstr(<<>>,Acc) ->
-    rev_bin_to_hexstr(Acc);
-bin_to_hexstr(<<H/integer,Rest/binary>>,Acc) ->
-    bin_to_hexstr(Rest,[H|Acc]).
-
-rev_bin_to_hexstr(Rest) ->
-    rev_bin_to_hexstr(Rest,<<>>).
-
-rev_bin_to_hexstr([],Acc) ->
+    hexlify_to_bin(Binary,[]).
+hexlify_to_bin(<<>>,Acc) ->
+    rev_hexlify_to_bin(Acc);
+hexlify_to_bin(<<H/integer,Rest/binary>>,Acc) ->
+    hexlify_to_bin(Rest,[H|Acc]).
+rev_hexlify_to_bin(Rest) ->
+    rev_hexlify_to_bin(Rest,<<>>).
+rev_hexlify_to_bin([],Acc) ->
     Acc;
-rev_bin_to_hexstr([H|Rest],Acc) ->
-    rev_bin_to_hexstr(Rest,<<(to_hex(H))/binary,Acc/binary>>).
+rev_hexlify_to_bin([H|Rest],Acc) ->
+    rev_hexlify_to_bin(Rest,<<(int_to_hex(H))/binary,Acc/binary>>).
+int_to_hex(N) when N < 256 ->
+    <<(to_hex(N div 16))/binary, (to_hex(N rem 16))/binary>>.
+to_hex(N) when N < 10 ->
+    <<($0+N)>>;
+to_hex(N) when N >= 10, N < 16 ->
+    <<($a+(N-10))>>.
 
 %% @spec hmac224(key(), data()) -> mac()
 %% where
