@@ -9,6 +9,7 @@
 
 -module(hmac).
 -export([hexlify/1,
+         hexlify_to_bin/1,
          hmac/2,
          hmac/4,
          hmac224/2,
@@ -33,6 +34,30 @@
 hexlify(Binary) when is_binary(Binary) ->
     lists:flatten([io_lib:format("~2.16.0B", [B]) ||
                       B <- binary_to_list(Binary)]).
+
+hexlify_to_bin(Binary)->
+    bin_to_hexstr(Binary,[]).
+
+hex(N) when N < 10 ->
+    <<($0+N)>>;
+hex(N) when N >= 10, N < 16 ->
+    <<($a+(N-10))>>.
+
+to_hex(N) when N < 256 ->
+    <<(hex(N div 16))/binary, (hex(N rem 16))/binary>>.
+
+bin_to_hexstr(<<>>,Acc) ->
+    rev_bin_to_hexstr(Acc);
+bin_to_hexstr(<<H/integer,Rest/binary>>,Acc) ->
+    bin_to_hexstr(Rest,[H|Acc]).
+
+rev_bin_to_hexstr(Rest) ->
+    rev_bin_to_hexstr(Rest,<<>>).
+
+rev_bin_to_hexstr([],Acc) ->
+    Acc;
+rev_bin_to_hexstr([H|Rest],Acc) ->
+    rev_bin_to_hexstr(Rest,<<(to_hex(H))/binary,Acc/binary>>).
 
 %% @spec hmac224(key(), data()) -> mac()
 %% where
