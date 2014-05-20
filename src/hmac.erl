@@ -63,7 +63,7 @@ to_hex(_, N) when N < 10 ->
 to_hex(upper, N) when N >= 10, N < 16 ->
     <<($A+(N-10))>>;
 to_hex(lower, N) when N >= 10, N < 16 ->
-    <<($A+(N-10))>>.
+    <<($a+(N-10))>>.
 
 %% @spec hmac224(key(), data()) -> mac()
 %% where
