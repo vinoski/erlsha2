@@ -18,7 +18,10 @@ hex_int(binary,Binary)->
 hexlify_to_bin_test()->
     ?assertEqual(<<>>, hmac:hexlify_to_bin(<<"">>)),
     ?assertEqual(<<"01">>, hmac:hexlify_to_bin(<<1>>)),
-    ?assertEqual(<<"0123456789abcdeffedcba9876543210">>, hmac:hexlify_to_bin(<<1,35,69,103,137,171,205,239,254,220,186,152,118,84,50,16>>)).
+    % test default upper case hexlify_to_bin
+    ?assertEqual(<<"0123456789ABCDEFFEDCBA9876543210">>, hmac:hexlify_to_bin(<<1,35,69,103,137,171,205,239,254,220,186,152,118,84,50,16>>)),
+    % test lower case hexlify_to_bin
+    ?assertEqual(<<"0123456789abcdeffedcba9876543210">>, hmac:hexlify_to_bin(<<1,35,69,103,137,171,205,239,254,220,186,152,118,84,50,16>>,lower)).
 
 wikipedia_test() ->
     [ begin

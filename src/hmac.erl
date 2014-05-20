@@ -9,7 +9,7 @@
 
 -module(hmac).
 -export([hexlify/1,
-         hexlify_to_bin/1,
+         hexlify_to_bin/1, hexlify_to_bin/2,
          hmac/2,
          hmac/4,
          hmac224/2,
@@ -39,23 +39,31 @@ hexlify(Binary) when is_binary(Binary) ->
 %% @doc Convert binary to equivalent hexadecimal binary
 %%
 hexlify_to_bin(Binary)->
-    hexlify_to_bin(Binary,[]).
-hexlify_to_bin(<<>>,Acc) ->
-    rev_hexlify_to_bin(Acc);
-hexlify_to_bin(<<H/integer,Rest/binary>>,Acc) ->
-    hexlify_to_bin(Rest,[H|Acc]).
-rev_hexlify_to_bin(Rest) ->
-    rev_hexlify_to_bin(Rest,<<>>).
-rev_hexlify_to_bin([],Acc) ->
+    hexlify_to_bin(Binary, upper).
+%% @spec hexlify_to_bin(binary(), atom()) -> binary()
+%% @doc Convert binary to equivalent hexadecimal binary based on the case
+%%% The default CaseOption is upper, the alternative being lower.
+%%
+hexlify_to_bin(Binary, CaseOption)->
+    hexlify_to_bin(Binary, CaseOption, []).
+hexlify_to_bin(<<>>, CaseOption, Acc) ->
+    rev_hexlify_to_bin(CaseOption, Acc);
+hexlify_to_bin(<<H/integer, Rest/binary>>, CaseOption, Acc) ->
+    hexlify_to_bin(Rest, CaseOption, [H|Acc]).
+rev_hexlify_to_bin(CaseOption, Rest) ->
+    rev_hexlify_to_bin(CaseOption, Rest, <<>>).
+rev_hexlify_to_bin(_, [], Acc) ->
     Acc;
-rev_hexlify_to_bin([H|Rest],Acc) ->
-    rev_hexlify_to_bin(Rest,<<(int_to_hex(H))/binary,Acc/binary>>).
-int_to_hex(N) when N < 256 ->
-    <<(to_hex(N div 16))/binary, (to_hex(N rem 16))/binary>>.
-to_hex(N) when N < 10 ->
+rev_hexlify_to_bin(CaseOption, [H|Rest], Acc) ->
+    rev_hexlify_to_bin(CaseOption,Rest, <<(int_to_hex(CaseOption,H))/binary,Acc/binary>>).
+int_to_hex(CaseOption,N) when N < 256 ->
+    <<(to_hex(CaseOption, N div 16))/binary, (to_hex(CaseOption, N rem 16))/binary>>.
+to_hex(_, N) when N < 10 ->
     <<($0+N)>>;
-to_hex(N) when N >= 10, N < 16 ->
-    <<($a+(N-10))>>.
+to_hex(upper, N) when N >= 10, N < 16 ->
+    <<($A+(N-10))>>;
+to_hex(lower, N) when N >= 10, N < 16 ->
+    <<($A+(N-10))>>.
 
 %% @spec hmac224(key(), data()) -> mac()
 %% where
