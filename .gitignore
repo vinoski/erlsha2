@@ -1,7 +1,8 @@
 *~
 .eunit
+.rebar
 c_src/config.h
 c_src/*.o
 ebin
-priv
+priv/*.so
 deps

@@ -1,3 +1,4 @@
+%% encoding: UTF-8
 {application,erlsha2}.
 {packages,[]}.
 {modules,[erlsha2,hmac]}.
