@@ -7,9 +7,9 @@
 
 
 Implementations of SHA-224, SHA-256, SHA-384, SHA-512 in Erlang NIFs.
-Copyright (c) 2009-2011 Stephen B. Vinoski, All rights reserved. Open source, BSD License
+Copyright (c) 2009-2014 Stephen B. Vinoski, All rights reserved. Open source, BSD License
 
-__Version:__ 2.0
+__Version:__ 2.1
 
 
 __Introduced in:__ 03 Jan 2009

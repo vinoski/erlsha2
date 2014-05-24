@@ -13,6 +13,17 @@
 hex_int(Binary) ->
     list_to_integer(hmac:hexlify(Binary), 16).
 
+hexlify_test()->
+    ?assertEqual(<<>>, hmac:hexlify(<<"">>, [binary])),
+    ?assertEqual(<<"01">>, hmac:hexlify(<<1>>, [binary])),
+    ?assertEqual(<<"0123456789abcdeffedcba9876543210">>, hmac:hexlify(<<1,35,69,103,137,171,205,239,254,220,186,152,118,84,50,16>>, [binary,lower])),
+    ?assertEqual("", hmac:hexlify(<<"">>)),
+    ?assertEqual("0A", hmac:hexlify(<<10>>, [upper,string])),
+    ?assertEqual(<<"0A">>, hmac:hexlify(<<10>>, [upper,binary])),
+    ?assertEqual("0123456789", hmac:hexlify(<<1,35,69,103,137>>, [])),
+    ?assertEqual("abcdef", hmac:hexlify(<<171,205,239>>, [lower])),
+    ok.
+
 wikipedia_test() ->
     ?assertMatch(16#fbdb1d1b18aa6c08324b7d64b71fb76370690e1d,
                  hex_int(hmac:hmac("", ""))),
