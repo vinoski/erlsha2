@@ -3,6 +3,7 @@
 .rebar
 c_src/config.h
 c_src/*.o
+c_src/*.d
 ebin
 priv/*.so
 deps

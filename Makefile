@@ -3,7 +3,7 @@ PREFIX:=../
 DEST:=$(PREFIX)$(PROJECT)
 
 # Expect to find rebar in the PATH. If you don't have rebar, you can get it
-# from https://github.com/basho/rebar .
+# from https://github.com/rebar/rebar .
 REBAR=rebar
 
 .PHONY: all doc test clean
