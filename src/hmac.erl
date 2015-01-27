@@ -95,7 +95,7 @@ hexlify(Binary, Opts) when is_binary(Binary), is_list(Opts) ->
     hexlify_nif(Binary, Flags).
 
 hexlify_nif(_Bin, _Opts) ->
-    {error, nif_not_loaded}.
+    erlang:nif_error(nif_not_loaded).
 
 %% @spec hmac224(key(), data()) -> mac()
 %% where
