@@ -17,7 +17,7 @@
          hmac384/2,
          hmac512/2]).
 -on_load(init/0).
--version(2.2).
+-version("2.2.1").
 
 -ifdef(USE_CRYPTO_SHA_MAC).
 -define(CRYPTO_HMAC(Key,Data), crypto:sha_mac(Key,Data)).

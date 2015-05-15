@@ -9,7 +9,7 @@
 %%% @since 03 Jan 2009
 %%%
 %%% @copyright 2009-2015 Stephen B. Vinoski, All rights reserved. Open source, BSD License
-%%% @version 2.2
+%%% @version 2.2.1
 %%%
 
 %%%
@@ -48,7 +48,7 @@
 -export([sha256_init/0, sha256_update/2, sha256_final/1]).
 -export([sha384_init/0, sha384_update/2, sha384_final/1]).
 -export([sha512_init/0, sha512_update/2, sha512_final/1]).
--version(2.2).
+-version("2.2.1").
 -on_load(init/0).
 
 -define(H224, [16#C1059ED8, 16#367CD507, 16#3070DD17, 16#F70E5939,
